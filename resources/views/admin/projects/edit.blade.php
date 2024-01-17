@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
     <section class="container">
-        <h1>Post create</h1>
         <form action="{{ route('admin.projects.update',$project->slug) }}" enctype="multipart/form-data"  method="POST">
             @csrf
             @method('PUT')
@@ -12,25 +11,29 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <select type="text" class="form-control @error ('category_id') is-invalid @enderror" name="category_id">
-                    <option value="">Select Category</option>
-                    @foreach ($categories as $category)
-                        <option value="{{$category->id}}"{{ old('category_id',$project->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                    @endforeach
-                @error('technologies')
-                    <div class=" invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
             <div class="mb-3">
                 <textarea class="form-control @error ('body') is-invalid @enderror" placeholder="description" name="description" cols="30" rows="10">{{ old('', $project->description) }}</textarea>
                 @error('description')
                     <div class=" invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="mb-3">
-                <input type="text" class="form-control @error ('technologies') is-invalid @enderror" placeholder="technologies" name="technologies" value="{{ old('', $project->technologies) }}">
+            <div class="form-group">
+                <h6>Select technologies</h6>
+                @foreach ($technologies as $technology)
+                    <div class="form-check @error('technologies') is-invalid @enderror">
+                        @if($errors->any())
+                         <input type="checkbox" class="form-check-input" name="technologies[]" value="{{ $technology->id }}"  {{ in_array($technology->id, old('technologies', $project->technologies)) ? 'checked' : '' }}>
+                        @else
+                        <input type="checkbox" class="form-check-input" name="technologies[]" value="{{ $technology->id }}"  {{ $project->technologies->contains($technology->id) ? 'checked' : '' }} >
+                         @endif
+                        <label class="form-check-label">
+        
+                        {{ $technology->name }}
+                         </label>
+                    </div>
+                @endforeach
                 @error('technologies')
-                    <div class=" invalid-feedback">{{ $message }}</div>
+                    <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">

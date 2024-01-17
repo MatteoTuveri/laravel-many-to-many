@@ -47,8 +47,8 @@ class ProjectController extends Controller
             $data['image'] = $path;
         }
         $project = Project::create($data);
-        if ($request->has('tags')) {
-            $project->tags()->attach($request->tags);
+        if ($request->has('technologies')) {
+            $project->technologies()->attach($request->technologies);
         }
         return redirect()->route('admin.projects.show', $project->slug);
     }
@@ -90,10 +90,10 @@ class ProjectController extends Controller
             $data['image'] = $path;
         }
         $project->update($data);
-        if ($request->has('tags')) {
-            $project->tags()->sync($request->tags);
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($request->technologies);
         } else {
-            $project->tags()->detach();
+            $project->technologies()->detach();
         }
         return redirect()->route('admin.projects.show', $project->slug);
     }

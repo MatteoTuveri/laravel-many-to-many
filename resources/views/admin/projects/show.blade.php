@@ -1,7 +1,3 @@
-@php
-    dd($project->technologies)
-@endphp
-
 @extends('layouts.app')
 @section('content')
 <section class="container my-3" id="item-project">
