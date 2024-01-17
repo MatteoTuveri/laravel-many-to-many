@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('title',100)->unique();
             $table->string('slug',255)->unique();
             $table->text('description')->nullable();
-            $table->string('technologies',255);
             $table->string('authors',255)->nullable();
             $table->date('release_date');
             $table->string('image',255)->nullable();

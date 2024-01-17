@@ -20,7 +20,6 @@ class ProjectSeeder extends Seeder
             $newProject = new Project();
             $newProject ->title= $project['title'];
             $newProject ->description = $project['description'];
-            $newProject ->technologies = $project['technologies'];
             $newProject ->authors = $project['authors'];
             $newProject ->release_date = $project['release_date'];
             $newProject ->image = ProjectSeeder::storeimage($project['image'],$project['title']);

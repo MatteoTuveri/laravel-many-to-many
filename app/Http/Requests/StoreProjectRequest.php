@@ -23,7 +23,6 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'title' => ['required','min:5','max:200','unique:projects'],
-            'technologies' => ['required'],
             'release_date' =>['required'],
             'image' => ['nullable','image'],
             'category_id' => ['nullable','exists:categories,id']
@@ -35,7 +34,6 @@ class StoreProjectRequest extends FormRequest
             'title.required' => 'il titolo è obbligatorio',
             'title.min' => 'il titolo deve avere almeno :min caratteri',
             'title.max' => 'il titolo deve avere massimo :max caratteri',
-            'technologies.required' => 'L\'elenco delle tecnologie è obbligatorio',
             'release_date.required' => 'La data di rilascio è obbligatoria',
             'image.image' => 'L\'immagine deve essere un url'
         ];

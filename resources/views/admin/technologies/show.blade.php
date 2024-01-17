@@ -13,30 +13,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($category->technologies as $technology)
+                    @forelse ($technology->projects as $project)
                         <tr>
                             <th>
                                 <div class="d-flex align-items-center justify-content-center">
-                                    <a href="{{ route('admin.technologies.show', $technology->slug) }}">{{ $technology->name }}</a>
+                                    <a href="{{ route('admin.technologies.show', $project->slug) }}">{{ $project->name }}</a>
                                 </div>
                             </th>
                             <td>
                                 <div class="d-flex align-items-center justify-content-center">
-                                    {{ $technology->release_date }}
+                                    {{ $project->release_date }}
                                 </div></td>
                             <td>
                                 <div >
-                                    <form action="{{route('admin.technologies.destroy', $technology->slug)}}"class="d-flex align-items-center justify-content-center" method="POST">
+                                    <form action="{{route('admin.projects.destroy', $project->slug)}}"class="d-flex align-items-center justify-content-center" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a href="{{ route('admin.technologies.show', $technology->slug) }}" class="btn btn-primary text-decoration-none mx-1"><i class="fa-solid fa-eye"></i></a>
-                                        <a href="{{ route('admin.technologies.edit', $technology->slug) }}" class="btn btn-warning text-decoration-none mx-1"><i class="fa-solid fa-pencil"></i></a>
-                                        <button type="submit" class="btn btn-danger text-decoration-none mx-1 delete-button" data-item="{{ $technology->name }}"><i class="fa-solid fa-trash"></i></button>
+                                        <a href="{{ route('admin.projectss.show', $project->slug) }}" class="btn btn-primary text-decoration-none mx-1"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="{{ route('admin.projectss.edit', $project->slug) }}" class="btn btn-warning text-decoration-none mx-1"><i class="fa-solid fa-pencil"></i></a>
+                                        <button type="submit" class="btn btn-danger text-decoration-none mx-1 delete-button" data-item="{{ $project->name }}"><i class="fa-solid fa-trash"></i></button>
                                     </form>
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                        @empty
+                            <div>No Projects</div>
+                    @endforelse
                 </tbody>
             </table>
 

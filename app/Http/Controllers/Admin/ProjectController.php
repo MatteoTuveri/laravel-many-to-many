@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -27,7 +28,8 @@ class ProjectController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.projects.create',compact('categories'));
+        $technologies = Technology::all();
+        return view('admin.projects.create',compact('categories','technologies'));
     }
 
     /**
@@ -45,6 +47,9 @@ class ProjectController extends Controller
             $data['image'] = $path;
         }
         $project = Project::create($data);
+        if ($request->has('tags')) {
+            $project->tags()->attach($request->tags);
+        }
         return redirect()->route('admin.projects.show', $project->slug);
     }
 
@@ -62,7 +67,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $categories = Category::all();
-        return view('admin.projects.edit',compact('project'))->with(compact('categories'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit',compact('project','categories','technologies'));
     }
 
     /**
@@ -84,6 +90,11 @@ class ProjectController extends Controller
             $data['image'] = $path;
         }
         $project->update($data);
+        if ($request->has('tags')) {
+            $project->tags()->sync($request->tags);
+        } else {
+            $project->tags()->detach();
+        }
         return redirect()->route('admin.projects.show', $project->slug);
     }
 

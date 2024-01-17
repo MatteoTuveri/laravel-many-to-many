@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Project extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','category_id','title','slug','description','technologies','authors','release_date','image'];
+    protected $fillable = ['user_id','category_id','title','slug','description','authors','release_date','image'];
     public static function getSlug($title){
         $slug = Str::of($title)->slug('-');
         $count =1;
